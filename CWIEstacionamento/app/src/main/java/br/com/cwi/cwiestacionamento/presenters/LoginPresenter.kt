@@ -62,7 +62,7 @@ class LoginPresenter(private val view: LoginView) {
                     if (it.isSuccessful) {
                         onLoginSucceeded()
                     } else {
-                        view.onLoginFailed()
+                        view.onNormalLoginFailed(it.exception?.localizedMessage)
                     }
                 }
     }

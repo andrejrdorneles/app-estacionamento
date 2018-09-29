@@ -49,6 +49,10 @@ class LoginActivity : AppCompatActivity(), LoginView {
         Toast.makeText(this, getString(R.string.error_login), Toast.LENGTH_SHORT).show()
     }
 
+    override fun onNormalLoginFailed(reason: String?) {
+        Toast.makeText(this, reason, Toast.LENGTH_LONG).show()
+    }
+
     private fun logInWithEmailAndPassword() {
         val email = emailTextInput.text.toString()
         val password = passwordTextInput.text.toString()
