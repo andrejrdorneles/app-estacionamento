@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "747663639827",
+    "firebase_url": "https://cwi-estacionamento.firebaseio.com",
+    "project_id": "cwi-estacionamento",
+    "storage_bucket": "cwi-estacionamento.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:747663639827:android:ae5de3633f29f02c",
+        "android_client_info": {
+          "package_name": "br.com.cwi.cwiestacionamento"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "747663639827-fhou9mj6iusc7ksi9582fevk0s6bfghd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.cwi.cwiestacionamento",
+            "certificate_hash": "2b5c008a69f2aaca033f485b140251b53d8033d7"
+          }
+        },
+        {
+          "client_id": "747663639827-hmsaou08odkf8s2pn0e0i517j04jl8il.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQuA7YsxLCFwmgrIXfZEnFkafpRoBGpKw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "747663639827-hmsaou08odkf8s2pn0e0i517j04jl8il.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
