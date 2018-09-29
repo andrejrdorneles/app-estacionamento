@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">CWI Estacionamento</string>
+    <string name="e_mail">E-mail</string>
+    <string name="password">Senha</string>
+    <string name="signin">Entrar</string>
+    <string name="error_login">Erro ao realizar login.</string>
     <string name="perfil">Perfil</string>
     <string name="vagas">Vagas</string>
     <string name="mapa_vagas">Mapa de Vagas</string>
