@@ -1,7 +1,8 @@
-package br.com.cwi.cwiestacionamento
+package br.com.cwi.cwiestacionamento.activities
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import br.com.cwi.cwiestacionamento.R
 
 class MainActivity : AppCompatActivity() {
 
