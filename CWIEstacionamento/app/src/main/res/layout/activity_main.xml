@@ -19,7 +19,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:titleTextColor="@android:color/white"
-            android:background="@color/colorPrimary"
+            android:background="@color/blackBackground"
             android:layout_height="?attr/actionBarSize"
             app:title="@string/app_name" />
 
@@ -45,6 +45,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:menu="@menu/navigation_drawer"
-        app:headerLayout="@layout/nav_menu_header"/>
+        app:headerLayout="@layout/nav_menu_header" />
 
 </android.support.v4.widget.DrawerLayout>
