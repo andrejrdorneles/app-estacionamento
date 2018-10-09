@@ -41,6 +41,7 @@ class LoginPresenter(private val view: LoginView) {
             firebaseAuth.signInWithCredential(credential)
                     .addOnCompleteListener {
                         if (task.isSuccessful) {
+                            UserHolder.user = firebaseAuth.currentUser
                             onLoginSucceeded()
                         } else {
                             view.onLoginFailed()
@@ -60,6 +61,7 @@ class LoginPresenter(private val view: LoginView) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
+                        UserHolder.user = firebaseAuth.currentUser
                         onLoginSucceeded()
                     } else {
                         view.onNormalLoginFailed(it.exception?.localizedMessage)

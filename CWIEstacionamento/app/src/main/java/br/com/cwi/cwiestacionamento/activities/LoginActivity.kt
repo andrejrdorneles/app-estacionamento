@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.WindowManager
 import android.widget.Toast
 import br.com.cwi.cwiestacionamento.R
+import br.com.cwi.cwiestacionamento.fragments.SignUpDialogFragment
 import br.com.cwi.cwiestacionamento.presenters.LoginPresenter
 import br.com.cwi.cwiestacionamento.utils.UserHolder
 import br.com.cwi.cwiestacionamento.views.LoginView
@@ -29,6 +30,11 @@ class LoginActivity : AppCompatActivity(), LoginView {
 
         signInEmailPasswordButton.setOnClickListener {
             logInWithEmailAndPassword()
+        }
+
+        creatAccountButton.setOnClickListener {
+            val dialog = SignUpDialogFragment()
+            dialog.show(supportFragmentManager, "SignUpDialog")
         }
 
         if (UserHolder.isLoggedIn()) {
