@@ -6,6 +6,11 @@ interface LoginView {
     fun onNormalLoginFailed(reason: String?)
 }
 
+interface SignUpView {
+    fun onSignUpSucceeded()
+    fun onSignUpFailed(reason: String?)
+}
+
 open class Vaga(
         val vaga: String,
         val nome: String,

@@ -12,16 +12,7 @@
         android:layout_height="match_parent"
         tools:context=".activities.MainActivity">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:titleTextColor="@android:color/white"
-            android:background="@color/blackBackground"
-            android:layout_height="?attr/actionBarSize"
-            app:title="@string/app_name" />
+        <include layout="@layout/toolbar"/>
 
         <TextView
             android:id="@+id/textView"
@@ -39,12 +30,14 @@
 
     </android.support.constraint.ConstraintLayout>
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/navigationView"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:menu="@menu/navigation_drawer"
-        app:headerLayout="@layout/nav_menu_header" />
+    <include layout="@layout/view_navigation"/>
+
+    <!--<android.support.design.widget.NavigationView-->
+        <!--android:id="@+id/navigationView"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_gravity="start"-->
+        <!--app:menu="@menu/navigation_drawer"-->
+        <!--app:headerLayout="@layout/nav_menu_header"/>-->
 
 </android.support.v4.widget.DrawerLayout>
