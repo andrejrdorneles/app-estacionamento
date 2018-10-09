@@ -6,40 +6,29 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import br.com.cwi.cwiestacionamento.R
-import br.com.cwi.cwiestacionamento.views.Vaga
+import br.com.cwi.cwiestacionamento.models.Vaga
 import kotlinx.android.synthetic.main.view_vagas.view.*
 
-class VagasAdapter (private val items: ArrayList<Vaga>,
-                    private val onClick: (vaga: Vaga) -> Unit)
-    : RecyclerView.Adapter<VagasAdapter.ViewHolder>() {
+class VagasAdapter (private val items: ArrayList<Vaga>)
+    : RecyclerView.Adapter<VagasAdapter.VagaViewHolder>() {
 
-    private var lastItemPosition: Int = items.size
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VagaViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.view_vagas, parent, false)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        LayoutInflater.from(parent.context).run {
-            return ViewHolder(itemView = inflate(
-                    R.layout.view_vagas,
-                    parent,
-                    false))
-        }
+        return VagaViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: VagaViewHolder, position: Int) {
         items[position].run {
-            holder.vagaTextView.text = vaga
-            holder.nomeTextView.text = nome
+            holder.nomeTextView.text = name
+            holder.vagaTextView.text = vaga.toString()
             holder.disponibilidadeTextView.text = disponibilidade
-
-            holder.itemView.setOnClickListener {
-                onClick(this)
-            }
         }
     }
 
     override fun getItemCount() = items.size
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
+    class VagaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val vagaTextView: TextView = itemView.vagaTextView
         val nomeTextView: TextView = itemView.nomeTextView
         val disponibilidadeTextView: TextView = itemView.disponibilidadeTextView
