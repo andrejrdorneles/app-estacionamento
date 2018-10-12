@@ -11,7 +11,6 @@ import br.com.cwi.cwiestacionamento.R
 import br.com.cwi.cwiestacionamento.activities.MainActivity
 import br.com.cwi.cwiestacionamento.presenters.SignUpPresenter
 import br.com.cwi.cwiestacionamento.utils.UserHolder
-import br.com.cwi.cwiestacionamento.views.LoginView
 import br.com.cwi.cwiestacionamento.views.SignUpView
 import kotlinx.android.synthetic.main.fragment_sign_up_dialog.*
 import kotlinx.android.synthetic.main.fragment_sign_up_dialog.view.*

@@ -39,6 +39,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val fragment: Fragment? = null
 
         when(item.itemId){
+
+            R.id.nav_home -> {
+                mainDrawerLayout.closeDrawers()
+                return true
+            }
+
             R.id.nav_vagas -> {
                 intent = Intent(this, VagasActivity::class.java)
             }
