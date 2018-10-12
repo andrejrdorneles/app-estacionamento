@@ -16,4 +16,8 @@
         <item name="colorControlHighlight">@color/colorAccent</item>
     </style>
 
+    <style name="NavHeaderText" parent="AppTheme">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
 </resources>
