@@ -17,7 +17,8 @@
         android:gravity="center"
         android:paddingVertical="10dp">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/personImageHeaderMenu"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/profile_picture" />
