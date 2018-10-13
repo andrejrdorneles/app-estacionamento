@@ -59,7 +59,7 @@ class PerfilPresenter(private val view: PerfilView) {
                                     }
                                 }
                     } else {
-                        view.onSaveFailed()
+                        view.onSaveFailed(it.exception?.localizedMessage.toString())
                     }
                 }
     }

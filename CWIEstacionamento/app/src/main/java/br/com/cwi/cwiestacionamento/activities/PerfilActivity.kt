@@ -74,4 +74,8 @@ class PerfilActivity : AppCompatActivity(), PerfilView {
     override fun onSaveFailed() {
         Toast.makeText(this, getString(R.string.save_perfil_failed_), Toast.LENGTH_SHORT).show()
     }
+
+    override fun onSaveFailed(reason: String) {
+        Toast.makeText(this, reason, Toast.LENGTH_SHORT).show()
+    }
 }
