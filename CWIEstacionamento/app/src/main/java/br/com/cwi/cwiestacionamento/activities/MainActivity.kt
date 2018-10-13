@@ -43,6 +43,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 intent = Intent(this, VagasActivity::class.java)
             }
 
+            R.id.nav_perfil -> {
+                intent = Intent(this, PerfilActivity::class.java)
+            }
+
             else -> { return false }
         }
 

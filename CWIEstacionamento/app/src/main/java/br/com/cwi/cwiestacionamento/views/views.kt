@@ -23,3 +23,9 @@ interface VagasView {
     fun onDetailResponse()
     fun onDetailFailure(throwable: Throwable)
 }
+
+interface PerfilView {
+    fun save()
+    fun onSaveSuccess()
+    fun onSaveFailed()
+}
