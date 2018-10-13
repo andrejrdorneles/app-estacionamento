@@ -40,7 +40,7 @@ class PerfilPresenter(private val view: PerfilView) {
                         updateCurrentUser()
                         view.onSaveSuccess()
                     } else {
-                        view.onSaveFailed()
+                        view.onSaveFailed(it.exception!!.localizedMessage)
                     }
                 }
     }
@@ -49,17 +49,17 @@ class PerfilPresenter(private val view: PerfilView) {
         var credential = EmailAuthProvider.getCredential(person.email!!, person.actualPassword!!)
         user?.reauthenticate(credential)
                 ?.addOnCompleteListener {
-                    if(it.isSuccessful) {
+                    if (it.isSuccessful) {
                         user.updatePassword(person.newPassword!!)
                                 .addOnCompleteListener {
-                                    if(it.isSuccessful) {
+                                    if (it.isSuccessful) {
                                         updateCurrentUser()
                                     } else {
                                         view.onSaveFailed()
                                     }
                                 }
                     } else {
-                        view.onSaveFailed(it.exception?.localizedMessage.toString())
+                        view.onSaveFailed(it.exception!!.localizedMessage)
                     }
                 }
     }
@@ -69,7 +69,7 @@ class PerfilPresenter(private val view: PerfilView) {
             if (it.isSuccessful) {
                 updateCurrentUser()
             } else {
-                view.onSaveFailed()
+                view.onSaveFailed(it.exception!!.localizedMessage)
             }
         }
     }

@@ -21,7 +21,7 @@
     <string name="person_name">Nome:</string>
     <string name="person_email">E-mail:</string>
     <string name="save">Salvar</string>
-    <string name="save_perfil_success">Perfil salvo com sucesso.</string>
+    <string name="save_perfil_success">Nome salvo com sucesso.</string>
     <string name="save_perfil_failed_">Ocorreu um erro ao salvar o perfil.</string>
     <string name="actual_password">Senha atual:</string>
     <string name="new_password">Nova senha:</string>

@@ -19,7 +19,7 @@
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="200dp"
+                android:layout_height="110dp"
                 android:background="@drawable/background"
                 android:scaleType="centerCrop" />
 
@@ -27,9 +27,9 @@
                 android:id="@+id/circleImageViewPerfil"
                 android:layout_width="130dp"
                 android:layout_height="130dp"
-                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="130dp"
+                android:layout_marginTop="40dp"
                 android:src="@drawable/profile_picture" />
         </RelativeLayout>
 
