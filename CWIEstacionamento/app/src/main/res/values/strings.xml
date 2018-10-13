@@ -17,4 +17,6 @@
     <string name="save">Salvar</string>
     <string name="save_perfil_success">Perfil salvo com sucesso.</string>
     <string name="save_perfil_failed_">Ocorreu um erro ao salvar o perfil.</string>
+    <string name="actual_password">Senha atual:</string>
+    <string name="new_password">Nova senha:</string>
 </resources>

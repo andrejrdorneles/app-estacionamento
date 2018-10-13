@@ -28,6 +28,7 @@ class PerfilActivity : AppCompatActivity(), PerfilView {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back)
 
         if (currentUser?.providerId != null) {
             for (userInfo: UserInfo in currentUser!!.providerData) {
@@ -61,6 +62,8 @@ class PerfilActivity : AppCompatActivity(), PerfilView {
         val pessoa = Pessoa()
         pessoa.displayName = personName.text.toString()
         pessoa.email = personEmail.text.toString()
+        pessoa.actualPassword = personActualPassword.text.toString()
+        pessoa.newPassword = personNewPassword.text.toString()
         presenter.save(pessoa)
     }
 
