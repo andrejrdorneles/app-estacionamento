@@ -24,12 +24,14 @@
             android:src="@drawable/profile_picture" />
 
         <TextView
+            android:id="@+id/menuHeaderPersonName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nome da Pessoa"
             style="@style/NavHeaderText"/>
 
         <TextView
+            android:id="@+id/menuHeaderPersonEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="pessoa@email.com"
