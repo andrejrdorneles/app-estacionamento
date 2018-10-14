@@ -17,7 +17,7 @@ import java.util.*
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     var database: FirebaseDatabase = FirebaseDatabase.getInstance()
-    var vagasRef: DatabaseReference = database.getReference("0").child("vagas")
+    var vagasRef: DatabaseReference = database.getReference("0").child("disponiveis")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,16 +32,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 for (vagaSnapshot in p0.children) {
                     val vaga = vagaSnapshot.getValue(Vaga::class.java)!!
                     if (vaga.disponibilidade.equals("disponível")) {
-                        numeroVagas.inc()
+                        list.add(vaga)
                     }
                 }
+                numeroVagasDisponiveis.text = list.size.toString()
             }
 
             override fun onCancelled(p0: DatabaseError) {
             }
         })
 
-        numeroVagasDisponiveis.text = numeroVagas.toString()
+
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
