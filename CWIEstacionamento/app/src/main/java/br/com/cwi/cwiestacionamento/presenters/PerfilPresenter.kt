@@ -22,7 +22,12 @@ class PerfilPresenter(private val view: PerfilView) {
         }
 
         if (shouldUpdatePassword) {
-            updatePassword(pessoa)
+            try {
+                updatePassword(pessoa)
+            } catch (exception : Exception) {
+                view.onSaveFailed(exception.localizedMessage)
+                return
+            }
         }
 
         if (!pessoa.email.equals(user?.email)) {
@@ -59,7 +64,7 @@ class PerfilPresenter(private val view: PerfilView) {
                                     }
                                 }
                     } else {
-                        view.onSaveFailed(it.exception!!.localizedMessage)
+                        throw Exception(it.exception?.localizedMessage)
                     }
                 }
     }

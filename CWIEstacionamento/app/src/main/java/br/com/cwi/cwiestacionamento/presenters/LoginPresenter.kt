@@ -3,6 +3,7 @@ package br.com.cwi.cwiestacionamento.presenters
 import android.app.Activity
 import android.content.Intent
 import br.com.cwi.cwiestacionamento.R
+import br.com.cwi.cwiestacionamento.services.SharedPreferencesService
 import br.com.cwi.cwiestacionamento.utils.UserHolder
 import br.com.cwi.cwiestacionamento.views.LoginView
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -70,7 +71,10 @@ class LoginPresenter(private val view: LoginView) {
     }
 
     private fun onLoginSucceeded() {
-       UserHolder.user = firebaseAuth.currentUser
+        val currentUser = firebaseAuth.currentUser
+        UserHolder.user = currentUser
+        SharedPreferencesService.write("email", currentUser?.email.toString())
+        SharedPreferencesService.write("nome", currentUser?.displayName.toString())
         view.onLoginSucceeded()
     }
 }

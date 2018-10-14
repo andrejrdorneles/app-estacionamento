@@ -3,6 +3,7 @@
     package="br.com.cwi.cwiestacionamento">
 
     <application
+        android:name=".CWIEstacionamentoApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -12,7 +13,7 @@
         <activity
             android:name=".activities.LoginActivity"
             android:noHistory="true"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
