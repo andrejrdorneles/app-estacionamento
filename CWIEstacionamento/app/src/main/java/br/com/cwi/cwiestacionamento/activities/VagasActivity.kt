@@ -91,6 +91,10 @@ class VagasActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 vagasDrawerLayout.closeDrawers()
                 return true
             }
+
+            R.id.nav_perfil -> {
+                intent = Intent(this, PerfilActivity::class.java)
+            }
             else -> { return false }
         }
 

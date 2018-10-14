@@ -40,6 +40,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:16.0.0'
 
     implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 
     compile 'com.jsibbold:zoomage:1.2.0'
 
