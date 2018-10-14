@@ -17,4 +17,7 @@
     <string name="cancelar">Cancelar</string>
     <string name="adicionar_vaga">Gostaria de selecionar essa vaga?</string>
     <string name="home">Home</string>
+    <string name="lista_de_vagas">Lista de Vagas</string>
+    <string name="mapa_das_vagas">Mapa das Vagas</string>
+    <string name="ver_vagas">Ver vagas.</string>
 </resources>

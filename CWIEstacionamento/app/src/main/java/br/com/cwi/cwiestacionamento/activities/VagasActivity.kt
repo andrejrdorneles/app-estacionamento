@@ -83,6 +83,10 @@ class VagasActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 intent = Intent(this, MainActivity::class.java)
             }
 
+            R.id.nav_map -> {
+                intent = Intent(this, MapaActivity::class.java)
+            }
+
             R.id.nav_vagas -> {
                 vagasDrawerLayout.closeDrawers()
                 return true
