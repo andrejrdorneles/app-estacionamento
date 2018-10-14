@@ -4,7 +4,6 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
-import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -18,6 +17,9 @@ import br.com.cwi.cwiestacionamento.dialogs.VagaDetalheDialog
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.activity_vagas.*
 import kotlinx.android.synthetic.main.view_navigation.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class VagasActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -37,24 +39,50 @@ class VagasActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         var database: FirebaseDatabase = FirebaseDatabase.getInstance()
         var vagasRef: DatabaseReference = database.getReference("0").child("vagas")
+        var disponibilidadeVagasRef: DatabaseReference = database.getReference("0").child("disponiveis")
 
-        vagasRef.addValueEventListener(object : ValueEventListener {
+        val listaVagasSorteadas = ArrayList<Vaga>()
+        val listaVagasDisponiveis = ArrayList<Vaga>()
 
+        disponibilidadeVagasRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
-                val list = ArrayList<Vaga>()
                 for (vagaSnapshot in p0.children) {
                     val vaga = vagaSnapshot.getValue(Vaga::class.java)!!
-                    list.add(vaga)
+                    if (vaga.data.equals(SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().time))) {
+                        listaVagasDisponiveis.add(vaga)
+                    }
                 }
-                //TODO enviar junto com a lista de vagas sorteadas, a lista de vagas da nova tabela (dia de hoje);
-                vagasAdapter = VagasAdapter(list){
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+            }
+        })
+
+        vagasRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(p0: DataSnapshot) {
+                for (vagaSnapshot in p0.children) {
+                    val vaga = vagaSnapshot.getValue(Vaga::class.java)!!
+                    listaVagasSorteadas.add(vaga)
+                }
+
+                vagasAdapter = VagasAdapter(listaVagasSorteadas, listaVagasDisponiveis){
                     var vagaDetalheDialog = VagaDetalheDialog()
 
-                    // TODO antes de enviar a vaga para o dialog verificar se existe um registro na nova tabela;
+                    if (listaVagasDisponiveis.stream().filter {
+                                v ->
+                                v.vaga!!.equals(it.vaga) && v.disponibilidade.equals("disponível") }.findAny().isPresent) {
 
-                    vagaDetalheDialog.vaga = it
+                        vagaDetalheDialog.vaga = listaVagasDisponiveis.stream().filter {
+                            v ->
+                            v.vaga!! == it.vaga && v.disponibilidade.equals("disponível") }.findFirst().get()
+                    } else {
+
+                        vagaDetalheDialog.vaga = it
+                    }
+
                     vagaDetalheDialog.show(supportFragmentManager, "tag")
                 }
+
                 myRecyclerView = findViewById(R.id.recyclerViewListaVagas)
                 myRecyclerView.layoutManager = LinearLayoutManager(this@VagasActivity)
                 myRecyclerView.adapter = vagasAdapter
@@ -63,6 +91,7 @@ class VagasActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             override fun onCancelled(p0: DatabaseError) {
             }
         })
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -74,13 +103,14 @@ class VagasActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        var intent = Intent()
-        val fragment: Fragment? = null
-
         when(item.itemId){
 
             R.id.nav_home -> {
                 intent = Intent(this, MainActivity::class.java)
+            }
+
+            R.id.nav_map -> {
+                intent = Intent(this, MapaActivity::class.java)
             }
 
             R.id.nav_vagas -> {
@@ -93,7 +123,6 @@ class VagasActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             }
             else -> { return false }
         }
-
         vagasDrawerLayout.closeDrawers()
         startActivity(intent)
         return true
