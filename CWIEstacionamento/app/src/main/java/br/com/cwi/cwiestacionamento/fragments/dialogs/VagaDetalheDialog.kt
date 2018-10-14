@@ -19,7 +19,6 @@ class VagaDetalheDialog : DialogFragment() {
             val view = inflater.inflate(R.layout.dialog_vaga_detalhe, container, false)
             vaga.run {
                 view.numeroVagaTextView.text = vaga.toString()
-                view.nomePessoaTextView.text = name
             }
             return view
         } else {
