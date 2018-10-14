@@ -42,11 +42,12 @@
         android:textSize="14sp"
         android:textStyle="italic" />
 
-    <TextView
-        android:id="@+id/vagaDisponivelIcon"
+    <CheckBox
+        android:id="@+id/vagaCheckbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:background="@drawable/ic_check_green" />
+        android:checked="false"
+        android:clickable="false" />
 
 </RelativeLayout>
