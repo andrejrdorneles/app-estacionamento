@@ -24,6 +24,11 @@ class LoginActivity : AppCompatActivity(), LoginView {
 
         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
+        if (UserHolder.isLoggedIn()) {
+            goToMainActivity()
+            return
+        }
+
         signInGoogleButton.setOnClickListener {
             presenter.logInWithGoogle(this)
         }
@@ -35,10 +40,6 @@ class LoginActivity : AppCompatActivity(), LoginView {
         creatAccountButton.setOnClickListener {
             val dialog = SignUpDialogFragment()
             dialog.show(supportFragmentManager, "SignUpDialog")
-        }
-
-        if (UserHolder.isLoggedIn()) {
-            goToMainActivity()
         }
     }
 

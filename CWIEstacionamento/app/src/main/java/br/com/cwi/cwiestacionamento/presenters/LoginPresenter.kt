@@ -72,9 +72,7 @@ class LoginPresenter(private val view: LoginView) {
 
     private fun onLoginSucceeded() {
         val currentUser = firebaseAuth.currentUser
-        UserHolder.user = currentUser
-        SharedPreferencesService.write("email", currentUser?.email.toString())
-        SharedPreferencesService.write("nome", currentUser?.displayName.toString())
+        UserHolder.saveActualUser(currentUser!!)
         view.onLoginSucceeded()
     }
 }
