@@ -23,6 +23,7 @@
         <activity
             android:name=".activities.VagasActivity"
             android:theme="@style/AppTheme" />
+        <activity android:name=".activities.MapaActivity"></activity>
         <activity android:name=".activities.PerfilActivity"/>
     </application>
 
