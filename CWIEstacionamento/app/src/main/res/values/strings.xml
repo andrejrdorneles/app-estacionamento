@@ -31,4 +31,5 @@
     <string name="logout">Sair</string>
     <string name="temVaga">Você tem uma vaga</string>
     <string name="naoTemVaga">Você não possui uma vaga</string>
+    <string name="disponib_minha_vaga">Disponibilizar Minha Vaga</string>
 </resources>

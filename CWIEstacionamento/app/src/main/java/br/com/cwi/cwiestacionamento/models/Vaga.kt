@@ -1,6 +1,6 @@
 package br.com.cwi.cwiestacionamento.models
 
-class Vaga {
+open class Vaga {
 
     var vaga: Long? = null
     var name: String? = null
