@@ -29,4 +29,6 @@
     <string name="actual_password">Senha atual:</string>
     <string name="new_password">Nova senha:</string>
     <string name="logout">Sair</string>
+    <string name="temVaga">Você tem uma vaga</string>
+    <string name="naoTemVaga">Você não possui uma vaga</string>
 </resources>
