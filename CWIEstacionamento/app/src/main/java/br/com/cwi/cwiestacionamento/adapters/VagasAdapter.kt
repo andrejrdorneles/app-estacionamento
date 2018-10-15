@@ -24,8 +24,8 @@ class VagasAdapter (private val items: ArrayList<Vaga>,
     override fun onBindViewHolder(holder: VagaViewHolder, position: Int) {
 
         for (item in items) {
-            if (disponiveis.stream().filter { v -> v.vaga!!.equals(item.vaga) }.findFirst().isPresent) {
-                item.disponibilidade = disponiveis.stream().filter { v -> v.vaga!!.equals(item.vaga) }.findFirst().get().disponibilidade
+            if (vagaEstaDisponivel(item)) {
+                item.disponibilidade = disponiveis.stream().filter { v -> v.vaga!! == item.vaga }.findFirst().get().disponibilidade
             }
         }
 
@@ -40,6 +40,9 @@ class VagasAdapter (private val items: ArrayList<Vaga>,
         }
     }
 
+    private fun vagaEstaDisponivel(item: Vaga): Boolean {
+        return disponiveis.stream().filter { v -> v.vaga!! == item.vaga }.findFirst().isPresent
+    }
 
     override fun getItemCount() = items.size
 
