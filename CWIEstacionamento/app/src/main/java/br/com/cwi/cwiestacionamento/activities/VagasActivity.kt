@@ -14,6 +14,7 @@ import com.google.firebase.database.DataSnapshot
 import br.com.cwi.cwiestacionamento.models.Vaga
 import br.com.cwi.cwiestacionamento.R
 import br.com.cwi.cwiestacionamento.dialogs.VagaDetalheDialog
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.activity_vagas.*
 import kotlinx.android.synthetic.main.view_navigation.*
@@ -23,6 +24,8 @@ import kotlin.collections.ArrayList
 
 
 class VagasActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    private var currentUser = FirebaseAuth.getInstance().currentUser
 
     lateinit var myRecyclerView: RecyclerView
     lateinit var vagasAdapter: VagasAdapter
@@ -48,6 +51,7 @@ class VagasActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             override fun onDataChange(p0: DataSnapshot) {
                 for (vagaSnapshot in p0.children) {
                     val vaga = vagaSnapshot.getValue(Vaga::class.java)!!
+                    vaga.id = vagaSnapshot.key
                     if (vaga.data.equals(SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().time))) {
                         listaVagasDisponiveis.add(vaga)
                     }
@@ -62,24 +66,26 @@ class VagasActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             override fun onDataChange(p0: DataSnapshot) {
                 for (vagaSnapshot in p0.children) {
                     val vaga = vagaSnapshot.getValue(Vaga::class.java)!!
+                    vaga.id = vagaSnapshot.key
                     listaVagasSorteadas.add(vaga)
                 }
 
                 vagasAdapter = VagasAdapter(listaVagasSorteadas, listaVagasDisponiveis){
                     var vagaDetalheDialog = VagaDetalheDialog()
 
-                    if (listaVagasDisponiveis.stream().filter {
-                                v ->
-                                v.vaga!!.equals(it.vaga) && v.disponibilidade.equals("disponível") }.findAny().isPresent) {
-
-                        vagaDetalheDialog.vaga = listaVagasDisponiveis.stream().filter {
-                            v ->
-                            v.vaga!! == it.vaga && v.disponibilidade.equals("disponível") }.findFirst().get()
+                    if (vagaEstaDisponivel(listaVagasDisponiveis, it)) {
+                        vagaDetalheDialog.vaga = listaVagasDisponiveis.stream()
+                                .filter {
+                                    v ->
+                                    v.vaga!! == it.vaga && v.disponibilidade.equals("disponível") }.findFirst().get()
                     } else {
-
                         vagaDetalheDialog.vaga = it
                     }
 
+                    if (buscarVagaDoUsuario(listaVagasSorteadas, listaVagasDisponiveis) != null) {
+                        vagaDetalheDialog.possuiVaga = true
+                        vagaDetalheDialog.vagaDoUsuario = buscarVagaDoUsuario(listaVagasSorteadas, listaVagasDisponiveis)!!
+                    }
                     vagaDetalheDialog.show(supportFragmentManager, "tag")
                 }
 
@@ -92,6 +98,27 @@ class VagasActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             }
         })
 
+    }
+
+    private fun vagaEstaDisponivel(listaVagasDisponiveis: List<Vaga>, it: Vaga) : Boolean {
+        return listaVagasDisponiveis.stream().filter {
+            v ->
+            v.vaga!! == it.vaga && v.disponibilidade.equals("disponível") }.findAny().isPresent
+    }
+
+    private fun buscarVagaDoUsuario(listaVagasSorteadas: List<Vaga>, listaVagasDisponiveis: List<Vaga>) : Vaga? {
+
+        if (listaVagasSorteadas.stream().filter { v -> v.email == currentUser!!.email }.findAny().isPresent) {
+            return listaVagasSorteadas.stream().filter { v -> v.email == currentUser!!.email }.findFirst().get()
+        }
+
+        if (listaVagasDisponiveis.stream().filter { v -> v.emailOcupante == currentUser!!.email }.findAny().isPresent) {
+            return listaVagasDisponiveis.stream().filter { v -> v.emailOcupante == currentUser!!.email }.findFirst().get()
+        }
+
+        else {
+            return null
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
