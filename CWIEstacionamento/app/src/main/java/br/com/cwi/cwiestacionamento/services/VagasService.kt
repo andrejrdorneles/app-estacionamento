@@ -35,7 +35,7 @@ object VagasService : ChildEventListener {
     }
 
     override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return
     }
 
     override fun onChildAdded(p0: DataSnapshot, p1: String?) {
@@ -43,7 +43,7 @@ object VagasService : ChildEventListener {
     }
 
     override fun onChildRemoved(p0: DataSnapshot) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return
     }
 
 

@@ -31,7 +31,7 @@
     <string name="logout">Sair</string>
     <string name="tem_vaga">No momento, você disponibilizou a sua vaga fixa para que possa ser usada por outro colaborador.</string>
     <string name="tem_vaga_disponivel">Você possui uma vaga fixa. \n Caso não vá utiliza-la, disponibilize para que outro colaborador possa aproveitar o benefício do estacionamento.</string>
-    <string name="nao_tem_vaga">Você não possui uma vaga fixa. \n Caso tenha enterece em uma vaga temporária, procure uma vaga disponivel na lista de vagas.</string>
+    <string name="nao_tem_vaga">Você não possui uma vaga fixa. \n Caso tenha interesse em uma vaga temporária, procure uma vaga disponivel na lista de vagas.</string>
     <string name="disponib_minha_vaga">Disponibilizar Minha Vaga</string>
     <string name="possui_vaga">Você já possui uma vaga.</string>
     <string name="vagas_disp_hoje">Vagas disponíveis hoje:</string>
