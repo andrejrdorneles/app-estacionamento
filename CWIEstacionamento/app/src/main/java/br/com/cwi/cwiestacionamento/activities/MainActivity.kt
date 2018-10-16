@@ -2,7 +2,6 @@ package br.com.cwi.cwiestacionamento.activities
 
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
-import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -39,7 +38,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         vagasDispRef.addValueEventListener(object : ValueEventListener {
 
             override fun onDataChange(p0: DataSnapshot) {
-
+                listaVagasDisponiveis.clear()
                 for (vagaSnapshot in p0.children) {
                     val vaga = vagaSnapshot.getValue(Vaga::class.java)!!
                     if (vaga.disponibilidade.equals("disponível")) { //TODO ENUM STATUS VAGA
@@ -60,17 +59,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     val vaga = vagaSnapshot.getValue(Vaga::class.java)!!
                     val possuiVaga = vaga.email.equals(SharedPreferencesService.retrieveString(PessoaDados.EMAIL.value))
                     if(possuiVaga){
-                        vagaUsuario.text = getString(R.string.temVaga)
+                        vagaUsuarioText.text = getString(R.string.temVaga) + vaga.vaga
                         val vagaFoiDisponibilizada = listaVagasDisponiveis.find { it.vaga == vaga.vaga} != null
                         if(vagaFoiDisponibilizada){
-                            disponibilizarVaga.isEnabled = false
+                            disponibilizarVagaButton.isEnabled = false
                         }else{
-                            disponibilizarVaga.setOnClickListener {
+                            disponibilizarVagaButton.setOnClickListener {
                                 VagasService.disponibilizar(vaga)
+                                disponibilizarVagaButton.isEnabled = false
                             }
                         }
                     }else{
-                        vagaUsuario.text = getString(R.string.naoTemVaga)
+                        vagaUsuarioText.text = getString(R.string.naoTemVaga)
                     }
 
                 }

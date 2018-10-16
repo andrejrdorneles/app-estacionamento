@@ -29,7 +29,7 @@
     <string name="actual_password">Senha atual:</string>
     <string name="new_password">Nova senha:</string>
     <string name="logout">Sair</string>
-    <string name="temVaga">Você tem uma vaga</string>
-    <string name="naoTemVaga">Você não possui uma vaga</string>
+    <string name="temVaga">O número da sua vaga fixa é:&#160; </string>
+    <string name="naoTemVaga">Você não possui uma vaga fixa.</string>
     <string name="disponib_minha_vaga">Disponibilizar Minha Vaga</string>
 </resources>
