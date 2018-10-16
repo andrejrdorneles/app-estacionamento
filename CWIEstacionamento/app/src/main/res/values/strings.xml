@@ -32,4 +32,5 @@
     <string name="temVaga">O número da sua vaga fixa é:&#160; </string>
     <string name="naoTemVaga">Você não possui uma vaga fixa.</string>
     <string name="disponib_minha_vaga">Disponibilizar Minha Vaga</string>
+    <string name="possui_vaga">Você já possui uma vaga.</string>
 </resources>
