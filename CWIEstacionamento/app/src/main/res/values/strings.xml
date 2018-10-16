@@ -30,4 +30,5 @@
     <string name="new_password">Nova senha:</string>
     <string name="logout">Sair</string>
     <string name="possui_vaga">Você já possui uma vaga.</string>
+    <string name="person_image_url">URL da imagem:</string>
 </resources>
