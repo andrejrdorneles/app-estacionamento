@@ -8,6 +8,7 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import br.com.cwi.cwiestacionamento.R
 import kotlinx.android.synthetic.main.activity_main.*
 import br.com.cwi.cwiestacionamento.services.SharedPreferencesService
@@ -47,7 +48,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     if (vaga.disponibilidade.equals("disponível")) { //TODO ENUM STATUS VAGA
                         listaVagasDisponiveis.add(vaga)
                     }
+                    val vagaUsuario = vaga.emailOcupante.equals(SharedPreferencesService.retrieveString(PessoaDados.EMAIL.value))
+                    if (vagaUsuario){
+                        mostrarVagaAtual(vaga.vaga.toString())
+                    }
                 }
+                
                 numeroVagasDisponiveis.text = listaVagasDisponiveis.size.toString()
             }
 
@@ -62,18 +68,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     val vaga = vagaSnapshot.getValue(Vaga::class.java)!!
                     val possuiVaga = vaga.email.equals(SharedPreferencesService.retrieveString(PessoaDados.EMAIL.value))
                     if(possuiVaga){
-                        vagaUsuarioText.text = getString(R.string.temVaga) + vaga.vaga
+                        mostrarVagaAtual(vaga.vaga.toString())
                         val vagaFoiDisponibilizada = listaVagasDisponiveis.find { it.vaga == vaga.vaga} != null
                         if(vagaFoiDisponibilizada){
-                            disponibilizarVagaButton.isEnabled = false
+                            vagaUsuarioText.text = getString(R.string.tem_vaga)
                         }else{
+                            vagaUsuarioText.text = getString(R.string.tem_vaga_disponivel)
+                            disponibilizarVagaButton.isEnabled = true
                             disponibilizarVagaButton.setOnClickListener {
                                 VagasService.disponibilizar(vaga)
                                 disponibilizarVagaButton.isEnabled = false
+                                vagaUsuarioText.text = getString(R.string.tem_vaga)
                             }
                         }
                     }else{
-                        vagaUsuarioText.text = getString(R.string.naoTemVaga)
+                        vagaUsuarioText.text = getString(R.string.nao_tem_vaga)
                     }
 
                 }
@@ -88,6 +97,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
         navigationView.setNavigationItemSelectedListener(this)
 
+        verVagasButton.setOnClickListener {
+            intent = Intent(this, VagasActivity::class.java)
+            startActivity(intent)
+        }
+
+    }
+
+    fun mostrarVagaAtual(vaga : String){
+        vagaAtualInfo.visibility = View.VISIBLE
+        numeroVagaAtual.text = vaga
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
