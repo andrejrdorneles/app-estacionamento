@@ -37,4 +37,5 @@
     <string name="vagas_disp_hoje">Vagas disponíveis hoje:</string>
     <string name="minha_vaga">Minha Vaga</string>
     <string name="vaga_atual_title">O número da sua vaga atual é</string>
+    <string name="person_image_url">URL da imagem:</string>
 </resources>

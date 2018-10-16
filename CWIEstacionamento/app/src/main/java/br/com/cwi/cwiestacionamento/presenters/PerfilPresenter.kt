@@ -75,7 +75,9 @@ class PerfilPresenter(private val view: PerfilView) {
     }
 
     private fun updateCurrentUser() {
-        UserHolder.user = firebaseAuth.currentUser
+        val currentUser = firebaseAuth.currentUser
+        UserHolder.user = currentUser
+        UserHolder.saveActualUser(currentUser!!)
     }
 
     fun getCurrentUser(): FirebaseUser? {
