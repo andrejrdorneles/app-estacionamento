@@ -1,8 +1,9 @@
 package br.com.cwi.cwiestacionamento.services
 
+import android.icu.text.SimpleDateFormat
 import br.com.cwi.cwiestacionamento.models.Vaga
-import br.com.cwi.cwiestacionamento.models.VagaDisponibilizada
 import com.google.firebase.database.*
+import java.util.*
 
 object VagasService : ChildEventListener {
 
@@ -20,7 +21,9 @@ object VagasService : ChildEventListener {
     fun disponibilizar(vaga: Vaga) {
         val reference = reference.push()
 //        reference.key?.let { vaga.vaga = it.toLong() }
-        reference.setValue(VagaDisponibilizada(vaga))
+        vaga.disponibilidade = "disponível"
+        vaga.data = SimpleDateFormat("dd/M/yyyy").format(Date()).toString()
+        reference.setValue(vaga)
     }
 
     override fun onCancelled(p0: DatabaseError) {

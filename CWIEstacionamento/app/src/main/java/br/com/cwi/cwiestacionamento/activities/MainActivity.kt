@@ -25,10 +25,13 @@ import java.util.*
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     var database: FirebaseDatabase = FirebaseDatabase.getInstance()
+
     var vagasDispRef: Query = database.getReference("0")
             .child("disponiveis").orderByChild("data")
             .equalTo(SimpleDateFormat("dd/M/yyyy").format(Date()).toString())
+
     val listaVagasDisponiveis = ArrayList<Vaga>()
+
     var vagasRef: DatabaseReference = database.getReference("0").child("vagas")
 
     override fun onCreate(savedInstanceState: Bundle?) {
