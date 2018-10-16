@@ -36,10 +36,12 @@ class PerfilActivity : AppCompatActivity(), PerfilView {
                 personEmail.setText(userInfo.email)
                 setImageProfile(userInfo.photoUrl)
             }
-        } else {
-            personName.setText(currentUser?.displayName)
-            personEmail.setText(currentUser?.email)
-            setImageProfile(currentUser?.photoUrl)
+
+            if (currentUser!!.providerData[1].providerId.equals("google.com")) {
+                personEmail.isEnabled = false
+                personNewPassword.isEnabled = false
+                personActualPassword.isEnabled = false
+            }
         }
 
         savePerfilButton.setOnClickListener {
@@ -64,6 +66,7 @@ class PerfilActivity : AppCompatActivity(), PerfilView {
         pessoa.email = personEmail.text.toString()
         pessoa.actualPassword = personActualPassword.text.toString()
         pessoa.newPassword = personNewPassword.text.toString()
+        pessoa.photoURL = Uri.parse(personImageUrl.text.toString())
         presenter.save(pessoa)
     }
 
