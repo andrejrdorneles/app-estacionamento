@@ -40,6 +40,11 @@ class VagasActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
         navigationView.setNavigationItemSelectedListener(this)
 
+        loadRecyclerViewData()
+    }
+
+    private fun loadRecyclerViewData() {
+
         var database: FirebaseDatabase = FirebaseDatabase.getInstance()
         var vagasRef: DatabaseReference = database.getReference("0").child("vagas")
         var disponibilidadeVagasRef: DatabaseReference = database.getReference("0").child("disponiveis")
@@ -57,7 +62,6 @@ class VagasActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                     }
                 }
             }
-
             override fun onCancelled(p0: DatabaseError) {
             }
         })
@@ -70,14 +74,14 @@ class VagasActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                     listaVagasSorteadas.add(vaga)
                 }
 
-                vagasAdapter = VagasAdapter(listaVagasSorteadas, listaVagasDisponiveis){
+                vagasAdapter = VagasAdapter(listaVagasSorteadas, listaVagasDisponiveis) {
                     var vagaDetalheDialog = VagaDetalheDialog()
 
                     if (vagaEstaDisponivel(listaVagasDisponiveis, it)) {
                         vagaDetalheDialog.vaga = listaVagasDisponiveis.stream()
-                                .filter {
-                                    v ->
-                                    v.vaga!! == it.vaga && v.disponibilidade.equals("disponível") }.findFirst().get()
+                                .filter { v ->
+                                    v.vaga!! == it.vaga && v.disponibilidade.equals("disponível")
+                                }.findFirst().get()
                     } else {
                         vagaDetalheDialog.vaga = it
                     }
@@ -97,7 +101,6 @@ class VagasActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             override fun onCancelled(p0: DatabaseError) {
             }
         })
-
     }
 
     private fun vagaEstaDisponivel(listaVagasDisponiveis: List<Vaga>, it: Vaga) : Boolean {
