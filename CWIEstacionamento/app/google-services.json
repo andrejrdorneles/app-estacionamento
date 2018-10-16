@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "747663639827-8ek8a5rqm85jl0ojv9jrrbdu5q5i287m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.cwi.cwiestacionamento",
+            "certificate_hash": "b67f620e092285646d3a22d23fb5e85e55793191"
+          }
+        },
+        {
           "client_id": "747663639827-hmsaou08odkf8s2pn0e0i517j04jl8il.apps.googleusercontent.com",
           "client_type": 3
         }
