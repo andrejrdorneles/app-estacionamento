@@ -7,6 +7,7 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.Menu
 import android.view.MenuItem
 import br.com.cwi.cwiestacionamento.adapters.VagasAdapter
 import com.google.firebase.database.*
@@ -14,9 +15,13 @@ import com.google.firebase.database.DataSnapshot
 import br.com.cwi.cwiestacionamento.models.Vaga
 import br.com.cwi.cwiestacionamento.R
 import br.com.cwi.cwiestacionamento.dialogs.VagaDetalheDialog
+import br.com.cwi.cwiestacionamento.services.SharedPreferencesService
+import br.com.cwi.cwiestacionamento.utils.PessoaDados
+import br.com.cwi.cwiestacionamento.utils.loadImage
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.activity_vagas.*
+import kotlinx.android.synthetic.main.nav_menu_header.*
 import kotlinx.android.synthetic.main.view_navigation.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -157,4 +162,26 @@ class VagasActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         startActivity(intent)
         return true
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        updateInfoUser()
+        menuInflater.inflate(R.menu.main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        updateInfoUser()
+    }
+
+    private fun updateInfoUser() {
+        menuHeaderPersonEmail.text = SharedPreferencesService.retrieveString(PessoaDados.EMAIL.value)
+        menuHeaderPersonName.text = SharedPreferencesService.retrieveString(PessoaDados.NAME.value)
+        val uriProfileImage = SharedPreferencesService.retrieveString(PessoaDados.IMAGE.value)
+
+        if (!uriProfileImage.isNullOrBlank()) {
+            personImageHeaderMenu.loadImage(uriProfileImage)
+        }
+    }
+
 }

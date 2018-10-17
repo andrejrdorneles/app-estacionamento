@@ -57,6 +57,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        updateInfoUser()
+        menuInflater.inflate(R.menu.main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        updateInfoUser()
+    }
+
+    private fun updateInfoUser() {
         menuHeaderPersonEmail.text = SharedPreferencesService.retrieveString(PessoaDados.EMAIL.value)
         menuHeaderPersonName.text = SharedPreferencesService.retrieveString(PessoaDados.NAME.value)
         val uriProfileImage = SharedPreferencesService.retrieveString(PessoaDados.IMAGE.value)
@@ -64,8 +75,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (!uriProfileImage.isNullOrBlank()) {
             personImageHeaderMenu.loadImage(uriProfileImage)
         }
-        menuInflater.inflate(R.menu.main, menu)
-        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
