@@ -1,12 +1,11 @@
 package br.com.cwi.cwiestacionamento.activities
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.Gravity
 import android.view.MenuItem
 import br.com.cwi.cwiestacionamento.adapters.VagasAdapter
 import com.google.firebase.database.*
@@ -14,30 +13,20 @@ import com.google.firebase.database.DataSnapshot
 import br.com.cwi.cwiestacionamento.models.Vaga
 import br.com.cwi.cwiestacionamento.R
 import br.com.cwi.cwiestacionamento.dialogs.VagaDetalheDialog
-import br.com.cwi.cwiestacionamento.services.VagasService
-import kotlinx.android.synthetic.main.toolbar.*
+import br.com.cwi.cwiestacionamento.services.VagasUtilsService
 import kotlinx.android.synthetic.main.activity_vagas.*
-import kotlinx.android.synthetic.main.view_navigation.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-class VagasActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class VagasActivity : BaseActivity() {
 
     lateinit var myRecyclerView: RecyclerView
     lateinit var vagasAdapter: VagasAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_vagas)
-
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
-        navigationView.setNavigationItemSelectedListener(this)
-
         loadRecyclerViewData()
     }
 
@@ -63,6 +52,7 @@ class VagasActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                     }
                 }
             }
+
             override fun onCancelled(p0: DatabaseError) {
             }
         })
@@ -78,7 +68,7 @@ class VagasActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 vagasAdapter = VagasAdapter(listaVagasSorteadas, listaVagasDisponiveis) {
                     var vagaDetalheDialog = VagaDetalheDialog()
 
-                    if (VagasService().vagaEstaDisponivel(listaVagasDisponiveis, it)) {
+                    if (VagasUtilsService().vagaEstaDisponivel(listaVagasDisponiveis, it)) {
                         vagaDetalheDialog.vaga = listaVagasDisponiveis.stream()
                                 .filter { v ->
                                     v.vaga!! == it.vaga && v.disponibilidade.equals("disponível")
@@ -87,9 +77,9 @@ class VagasActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                         vagaDetalheDialog.vaga = it
                     }
 
-                    if (VagasService().buscarVagaDoUsuario(listaVagasSorteadas, listaVagasDisponiveis) != null) {
+                    if (VagasUtilsService().buscarVagaDoUsuario(listaVagasSorteadas, listaVagasDisponiveis) != null) {
                         vagaDetalheDialog.possuiVaga = true
-                        vagaDetalheDialog.vagaDoUsuario = VagasService().buscarVagaDoUsuario(listaVagasSorteadas, listaVagasDisponiveis)!!
+                        vagaDetalheDialog.vagaDoUsuario = VagasUtilsService().buscarVagaDoUsuario(listaVagasSorteadas, listaVagasDisponiveis)!!
                     }
                     vagaDetalheDialog.show(supportFragmentManager, "tag")
                 }
@@ -111,10 +101,11 @@ class VagasActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             return true
         }
         return super.onOptionsItemSelected(item)
+
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
 
             R.id.nav_home -> {
                 intent = Intent(this, MainActivity::class.java)
@@ -136,10 +127,26 @@ class VagasActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             R.id.nav_perfil -> {
                 intent = Intent(this, PerfilActivity::class.java)
             }
-            else -> { return false }
+            else -> {
+                return false
+            }
         }
         vagasDrawerLayout.closeDrawers()
         startActivity(intent)
         return true
     }
+
+    override fun getContentView(): Int {
+        return R.layout.activity_vagas
+    }
+
+    override fun openDrawers() {
+        vagasDrawerLayout.openDrawer(Gravity.START)
+    }
+
+    override fun closeDrawers() {
+        vagasDrawerLayout.closeDrawers()
+    }
+
 }
+

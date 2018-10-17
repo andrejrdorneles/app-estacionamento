@@ -23,15 +23,13 @@ class VagasDisponiveisAdapter(private val items: ArrayList<Vaga>,
     override fun onBindViewHolder(holder: VagaViewHolder, position: Int) {
 
         items[position].run {
-            if (this.disponibilidade.equals("disponível")) {
-                holder.nomeTextView.text = name
-                holder.vagaTextView.text = vaga.toString()
-                holder.disponibilidadeTextView.text = disponibilidade
-                holder.itemView.setOnClickListener {
-                    onClick(this)
-                }
-                holder.vagaCheckbox.isChecked = disponibilidade == "disponível"
+            holder.nomeTextView.text = name
+            holder.vagaTextView.text = vaga.toString()
+            holder.disponibilidadeTextView.text = disponibilidade
+            holder.itemView.setOnClickListener {
+                onClick(this)
             }
+            holder.vagaCheckbox.isChecked = disponibilidade == "disponível"
         }
     }
 

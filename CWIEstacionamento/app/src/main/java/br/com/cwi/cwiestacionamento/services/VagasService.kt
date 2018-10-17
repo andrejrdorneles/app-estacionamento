@@ -1,28 +1,51 @@
 package br.com.cwi.cwiestacionamento.services
 
 import br.com.cwi.cwiestacionamento.models.Vaga
-import com.google.firebase.auth.FirebaseAuth
+import android.icu.text.SimpleDateFormat
+import com.google.firebase.database.*
+import java.util.*
 
-class VagasService {
+object VagasService : ChildEventListener {
 
-    private var currentUser = FirebaseAuth.getInstance().currentUser
-
-    fun vagaEstaDisponivel(listaVagasDisponiveis: List<Vaga>, it: Vaga): Boolean {
-        return listaVagasDisponiveis.stream().filter { v ->
-            v.vaga!! == it.vaga && v.disponibilidade.equals("disponível")
-        }.findAny().isPresent
+    private val database: FirebaseDatabase by lazy {
+        FirebaseDatabase.getInstance()
     }
 
-    fun buscarVagaDoUsuario(listaVagasSorteadas: List<Vaga>, listaVagasDisponiveis: List<Vaga>): Vaga? {
+    private lateinit var reference: DatabaseReference
 
-        if (listaVagasSorteadas.stream().filter { v -> v.email == currentUser!!.email }.findAny().isPresent) {
-            return listaVagasSorteadas.stream().filter { v -> v.email == currentUser!!.email }.findFirst().get()
-        }
-
-        if (listaVagasDisponiveis.stream().filter { v -> v.emailOcupante == currentUser!!.email }.findAny().isPresent) {
-            return listaVagasDisponiveis.stream().filter { v -> v.emailOcupante == currentUser!!.email }.findFirst().get()
-        } else {
-            return null
-        }
+    fun initialize() {
+        reference = database.getReference("0").child("disponiveis")
+        reference.addChildEventListener(this)
     }
+
+    fun disponibilizar(vaga: Vaga) {
+        val reference = reference.push()
+//        reference.key?.let { vaga.vaga = it.toLong() }
+        vaga.disponibilidade = "disponível"
+        vaga.data = SimpleDateFormat("dd/M/yyyy").format(Date()).toString()
+        reference.setValue(vaga)
+    }
+
+    override fun onCancelled(p0: DatabaseError) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+        return
+    }
+
+    override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+        return
+    }
+
+    override fun onChildRemoved(p0: DataSnapshot) {
+        return
+    }
+
+
+
 }

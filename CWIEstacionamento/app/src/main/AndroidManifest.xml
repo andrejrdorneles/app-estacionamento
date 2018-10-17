@@ -16,6 +16,7 @@
             android:theme="@style/AppTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -26,6 +27,7 @@
         <activity android:name=".activities.MapaActivity"></activity>
         <activity android:name=".activities.PerfilActivity"/>
         <activity android:name=".activities.VagasDisponiveisActivity"/>
+        <activity android:name=".activities.BaseActivity"></activity>
     </application>
 
 </manifest>

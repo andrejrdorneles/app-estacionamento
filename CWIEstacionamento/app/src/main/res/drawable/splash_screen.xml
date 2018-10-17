@@ -5,7 +5,7 @@
     </item>
 
     <item android:gravity="center">
-        <bitmap android:src="@drawable/logo_login" android:gravity="center"/>
+        <bitmap android:src="@drawable/parking" android:gravity="center"/>
     </item>
 
 </layer-list>

@@ -12,13 +12,14 @@ import br.com.cwi.cwiestacionamento.R
 import br.com.cwi.cwiestacionamento.adapters.VagasDisponiveisAdapter
 import br.com.cwi.cwiestacionamento.dialogs.VagaDetalheDialog
 import br.com.cwi.cwiestacionamento.models.Vaga
-import br.com.cwi.cwiestacionamento.services.VagasService
+import br.com.cwi.cwiestacionamento.services.VagasUtilsService
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_vagas.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_navigation.*
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.stream.Collectors
 
 class VagasDisponiveisActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -76,7 +77,7 @@ class VagasDisponiveisActivity : AppCompatActivity(), NavigationView.OnNavigatio
                 vagasAdapter = VagasDisponiveisAdapter(listaVagasDisponiveis) {
                     var vagaDetalheDialog = VagaDetalheDialog()
 
-                    if (VagasService().vagaEstaDisponivel(listaVagasDisponiveis, it)) {
+                    if (VagasUtilsService().vagaEstaDisponivel(listaVagasDisponiveis, it)) {
                         vagaDetalheDialog.vaga = listaVagasDisponiveis.stream()
                                 .filter { v ->
                                     v.vaga!! == it.vaga && v.disponibilidade.equals("disponível")
@@ -85,9 +86,9 @@ class VagasDisponiveisActivity : AppCompatActivity(), NavigationView.OnNavigatio
                         vagaDetalheDialog.vaga = it
                     }
 
-                    if (VagasService().buscarVagaDoUsuario(listaVagasSorteadas, listaVagasDisponiveis) != null) {
+                    if (VagasUtilsService().buscarVagaDoUsuario(listaVagasSorteadas, listaVagasDisponiveis) != null) {
                         vagaDetalheDialog.possuiVaga = true
-                        vagaDetalheDialog.vagaDoUsuario = VagasService().buscarVagaDoUsuario(listaVagasSorteadas, listaVagasDisponiveis)!!
+                        vagaDetalheDialog.vagaDoUsuario = VagasUtilsService().buscarVagaDoUsuario(listaVagasSorteadas, listaVagasDisponiveis)!!
                     }
                     vagaDetalheDialog.show(supportFragmentManager, "tag")
                 }
