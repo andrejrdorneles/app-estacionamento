@@ -3,6 +3,7 @@ package br.com.cwi.cwiestacionamento.utils
 import android.app.Activity
 import android.net.Uri
 import br.com.cwi.cwiestacionamento.services.SharedPreferencesService
+import br.com.cwi.cwiestacionamento.services.VagasService
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -11,6 +12,12 @@ import com.google.firebase.auth.UserInfo
 
 object UserHolder {
     var user: FirebaseUser? = null
+        set(value) {
+            field = value
+            field?.uid?.let {
+                VagasService.initialize()
+            }
+        }
 
     var signInOptions: GoogleSignInOptions? = null
 
