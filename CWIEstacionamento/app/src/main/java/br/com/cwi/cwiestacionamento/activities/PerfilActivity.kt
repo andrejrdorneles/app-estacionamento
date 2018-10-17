@@ -30,6 +30,14 @@ class PerfilActivity : AppCompatActivity(), PerfilView {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back)
 
+        updateInfoUser()
+
+        savePerfilButton.setOnClickListener {
+            save()
+        }
+    }
+
+    private fun updateInfoUser() {
         if (currentUser?.providerId != null) {
             for (userInfo: UserInfo in currentUser!!.providerData) {
                 personName.setText(userInfo.displayName)
@@ -42,10 +50,6 @@ class PerfilActivity : AppCompatActivity(), PerfilView {
                 personNewPassword.isEnabled = false
                 personActualPassword.isEnabled = false
             }
-        }
-
-        savePerfilButton.setOnClickListener {
-            save()
         }
     }
 
@@ -72,6 +76,8 @@ class PerfilActivity : AppCompatActivity(), PerfilView {
 
     override fun onSaveSuccess() {
         Toast.makeText(this, getString(R.string.save_perfil_success), Toast.LENGTH_SHORT).show()
+        this.updateInfoUser()
+
     }
 
     override fun onSaveFailed() {
