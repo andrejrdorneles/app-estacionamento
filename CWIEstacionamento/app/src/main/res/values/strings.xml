@@ -40,4 +40,6 @@
     <string name="minha_vaga">Minha Vaga</string>
     <string name="vaga_atual_title">O número da sua vaga atual é</string>
     <string name="person_image_url">URL da imagem:</string>
+    <string name="vagas_disponiveis">Vagas Disponíveis</string>
+    <string name="lista_de_vagas_disponiveis">Lista de Vagas Disponibilizadas Hoje</string>
 </resources>

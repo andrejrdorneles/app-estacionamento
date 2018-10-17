@@ -1,7 +1,7 @@
 package br.com.cwi.cwiestacionamento.services
 
-import android.icu.text.SimpleDateFormat
 import br.com.cwi.cwiestacionamento.models.Vaga
+import android.icu.text.SimpleDateFormat
 import com.google.firebase.database.*
 import java.util.*
 

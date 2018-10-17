@@ -32,6 +32,14 @@ class MapaActivity : BaseActivity() {
                 return true
             }
 
+            R.id.nav_vagas_disponiveis -> {
+                intent = Intent(this, VagasDisponiveisActivity::class.java)
+            }
+
+            R.id.nav_perfil -> {
+                intent = Intent(this, PerfilActivity::class.java)
+            }
+
             R.id.nav_vagas -> {
                 intent = Intent(this, VagasActivity::class.java)
             }

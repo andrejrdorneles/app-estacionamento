@@ -7,6 +7,11 @@
         android:title="@string/home"/>
 
     <item
+        android:id="@+id/nav_vagas_disponiveis"
+        android:icon="@drawable/ic_car"
+        android:title="@string/vagas_disponiveis" />
+
+    <item
         android:id="@+id/nav_vagas"
         android:icon="@drawable/ic_car"
         android:title="@string/vagas" />

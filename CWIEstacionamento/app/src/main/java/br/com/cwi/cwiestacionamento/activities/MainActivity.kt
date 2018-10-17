@@ -151,6 +151,10 @@ class MainActivity : BaseActivity() {
                 mainDrawerLayout.closeDrawers()
                 return true
             }
+            R.id.nav_vagas_disponiveis -> {
+                intent = Intent(this, VagasDisponiveisActivity::class.java)
+            }
+
 
             R.id.nav_map -> {
                 intent = Intent(this, MapaActivity::class.java)
