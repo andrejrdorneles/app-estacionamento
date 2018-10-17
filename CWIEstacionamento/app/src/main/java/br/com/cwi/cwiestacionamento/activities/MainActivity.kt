@@ -21,14 +21,12 @@ import kotlinx.android.synthetic.main.nav_menu_header.*
 import kotlinx.android.synthetic.main.view_navigation.*
 import java.util.*
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
+class MainActivity : BaseActivity() {
     var database: FirebaseDatabase = FirebaseDatabase.getInstance()
     var vagasRef: DatabaseReference = database.getReference("0").child("vagas")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         var numeroVagas = 0
 
@@ -49,49 +47,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         })
 
         numeroVagasDisponiveis.text = numeroVagas.toString()
-
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
-        navigationView.setNavigationItemSelectedListener(this)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        updateInfoUser()
-        menuInflater.inflate(R.menu.main, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        updateInfoUser()
-    }
-
-    private fun updateInfoUser() {
-        menuHeaderPersonEmail.text = SharedPreferencesService.retrieveString(PessoaDados.EMAIL.value)
-        menuHeaderPersonName.text = SharedPreferencesService.retrieveString(PessoaDados.NAME.value)
-        val uriProfileImage = SharedPreferencesService.retrieveString(PessoaDados.IMAGE.value)
-
-        if (!uriProfileImage.isNullOrBlank()) {
-            personImageHeaderMenu.loadImage(uriProfileImage)
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item?.itemId == android.R.id.home) {
-            mainDrawerLayout.openDrawer(GravityCompat.START)
-            return true
-        }
-
-        if (item?.itemId == R.id.logout) {
-            UserHolder.logOut(this)
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-            return true
-        }
-
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -115,8 +70,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             else -> { return false }
         }
-        mainDrawerLayout.closeDrawers()
+        closeDrawers()
         startActivity(intent)
         return true
     }
+
+    override fun openDrawers() {
+        mainDrawerLayout.openDrawer(GravityCompat.START)
+    }
+
+    override fun closeDrawers() {
+        mainDrawerLayout.closeDrawers()
+    }
+
+    override fun getContentView(): Int {
+        return R.layout.activity_main
+    }
+
 }
