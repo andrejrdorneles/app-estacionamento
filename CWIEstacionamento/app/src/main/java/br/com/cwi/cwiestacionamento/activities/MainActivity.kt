@@ -55,6 +55,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     val vagaUsuario = vaga.emailOcupante.equals(SharedPreferencesService.retrieveString(PessoaDados.EMAIL.value))
                     if (vagaUsuario){
                         mostrarVagaAtual(vaga.vaga.toString())
+                        vagaUsuarioText.text = getString(R.string.usando_vaga_de) + vaga.email
+                    }else{
+                        vagaUsuarioText.text = getString(R.string.nao_tem_vaga)
                     }
                 }
                 
@@ -74,9 +77,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     if(possuiVaga){
                         mostrarVagaAtual(vaga.vaga.toString())
                         val vagaEstaDisponivel = listaVagasDisponiveis.find { it.vaga == vaga.vaga} != null
-                        val vagaEstaOcupada = listaVagasDisponiveis.find { it.vaga == vaga.vaga} != null
+                        val vagaOcupada = vagasDisponibilizadasOcupadas.find { it.vaga == vaga.vaga}
                         if(vagaEstaDisponivel){
                             vagaUsuarioText.text = getString(R.string.tem_vaga)
+                        }else if(vagaOcupada != null){
+                            vagaUsuarioText.text = getString(R.string.tem_vaga_ocupada) + vagaOcupada.emailOcupante
                         }else{
                             vagaUsuarioText.text = getString(R.string.tem_vaga_disponivel)
                             disponibilizarVagaButton.isEnabled = true
@@ -86,8 +91,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                                 vagaUsuarioText.text = getString(R.string.tem_vaga)
                             }
                         }
-                    }else{
-                        vagaUsuarioText.text = getString(R.string.nao_tem_vaga)
                     }
 
                 }
