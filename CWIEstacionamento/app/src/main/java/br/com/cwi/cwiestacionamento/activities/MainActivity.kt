@@ -23,8 +23,7 @@ import kotlinx.android.synthetic.main.nav_menu_header.*
 import kotlinx.android.synthetic.main.view_navigation.*
 import java.util.*
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
+class MainActivity : BaseActivity() {
     var database: FirebaseDatabase = FirebaseDatabase.getInstance()
 
     var vagasDispRef: Query = database.getReference("0")
@@ -39,7 +38,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         vagasDispRef.addValueEventListener(object : ValueEventListener {
 
@@ -125,7 +123,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (!uriProfileImage.isNullOrBlank()) {
             personImageHeaderMenu.loadImage(uriProfileImage)
         }
-        menuInflater.inflate(R.menu.main, menu)
+        
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -167,8 +165,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             else -> { return false }
         }
-        mainDrawerLayout.closeDrawers()
+        closeDrawers()
         startActivity(intent)
         return true
     }
+
+    override fun openDrawers() {
+        mainDrawerLayout.openDrawer(GravityCompat.START)
+    }
+
+    override fun closeDrawers() {
+        mainDrawerLayout.closeDrawers()
+    }
+
+    override fun getContentView(): Int {
+        return R.layout.activity_main
+    }
+
 }
