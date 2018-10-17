@@ -1,37 +1,34 @@
 package br.com.cwi.cwiestacionamento.activities
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.MenuItem
-import br.com.cwi.cwiestacionamento.adapters.VagasAdapter
-import com.google.firebase.database.*
-import com.google.firebase.database.DataSnapshot
-import br.com.cwi.cwiestacionamento.models.Vaga
 import br.com.cwi.cwiestacionamento.R
+import br.com.cwi.cwiestacionamento.adapters.VagasDisponiveisAdapter
 import br.com.cwi.cwiestacionamento.dialogs.VagaDetalheDialog
+import br.com.cwi.cwiestacionamento.models.Vaga
 import br.com.cwi.cwiestacionamento.services.VagasService
-import kotlinx.android.synthetic.main.toolbar.*
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_vagas.*
+import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_navigation.*
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
-
-class VagasActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class VagasDisponiveisActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var myRecyclerView: RecyclerView
-    lateinit var vagasAdapter: VagasAdapter
+    lateinit var vagasAdapter: VagasDisponiveisAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_vagas)
+        setContentView(R.layout.activity_vagas_disponiveis)
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -50,6 +47,19 @@ class VagasActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         val listaVagasSorteadas = ArrayList<Vaga>()
         val listaVagasDisponiveis = ArrayList<Vaga>()
 
+        vagasRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(p0: DataSnapshot) {
+                for (vagaSnapshot in p0.children) {
+                    val vaga = vagaSnapshot.getValue(Vaga::class.java)!!
+                    vaga.id = vagaSnapshot.key
+                    listaVagasSorteadas.add(vaga)
+                }
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+            }
+        })
+
         disponibilidadeVagasRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
 
@@ -62,20 +72,8 @@ class VagasActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                         listaVagasDisponiveis.add(vaga)
                     }
                 }
-            }
-            override fun onCancelled(p0: DatabaseError) {
-            }
-        })
 
-        vagasRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(p0: DataSnapshot) {
-                for (vagaSnapshot in p0.children) {
-                    val vaga = vagaSnapshot.getValue(Vaga::class.java)!!
-                    vaga.id = vagaSnapshot.key
-                    listaVagasSorteadas.add(vaga)
-                }
-
-                vagasAdapter = VagasAdapter(listaVagasSorteadas, listaVagasDisponiveis) {
+                vagasAdapter = VagasDisponiveisAdapter(listaVagasDisponiveis) {
                     var vagaDetalheDialog = VagaDetalheDialog()
 
                     if (VagasService().vagaEstaDisponivel(listaVagasDisponiveis, it)) {
@@ -95,7 +93,7 @@ class VagasActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 }
 
                 myRecyclerView = findViewById(R.id.recyclerViewListaVagas)
-                myRecyclerView.layoutManager = LinearLayoutManager(this@VagasActivity)
+                myRecyclerView.layoutManager = LinearLayoutManager(this@VagasDisponiveisActivity)
                 myRecyclerView.adapter = vagasAdapter
                 vagasAdapter.notifyDataSetChanged()
             }
@@ -114,14 +112,15 @@ class VagasActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
 
             R.id.nav_home -> {
                 intent = Intent(this, MainActivity::class.java)
             }
 
             R.id.nav_vagas_disponiveis -> {
-                intent = Intent(this, VagasDisponiveisActivity::class.java)
+                vagasDrawerLayout.closeDrawers()
+                return true
             }
 
             R.id.nav_map -> {
@@ -129,14 +128,15 @@ class VagasActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             }
 
             R.id.nav_vagas -> {
-                vagasDrawerLayout.closeDrawers()
-                return true
+                intent = Intent(this, VagasActivity::class.java)
             }
 
             R.id.nav_perfil -> {
                 intent = Intent(this, PerfilActivity::class.java)
             }
-            else -> { return false }
+            else -> {
+                return false
+            }
         }
         vagasDrawerLayout.closeDrawers()
         startActivity(intent)

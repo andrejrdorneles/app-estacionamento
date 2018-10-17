@@ -25,6 +25,7 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".activities.MapaActivity"></activity>
         <activity android:name=".activities.PerfilActivity"/>
+        <activity android:name=".activities.VagasDisponiveisActivity"/>
     </application>
 
 </manifest>
