@@ -47,7 +47,7 @@
             android:id="@+id/verVagasButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
+            android:layout_marginVertical="20dp"
             android:paddingHorizontal="50dp"
             android:text="@string/ver_vagas" />
 

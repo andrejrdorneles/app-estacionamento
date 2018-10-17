@@ -33,6 +33,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     val listaVagasDisponiveis = ArrayList<Vaga>()
 
+    val vagasDisponibilizadasOcupadas = ArrayList<Vaga>()
+
     var vagasRef: DatabaseReference = database.getReference("0").child("vagas")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +49,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     val vaga = vagaSnapshot.getValue(Vaga::class.java)!!
                     if (vaga.disponibilidade.equals("disponível")) { //TODO ENUM STATUS VAGA
                         listaVagasDisponiveis.add(vaga)
+                    }else{
+                        vagasDisponibilizadasOcupadas.add(vaga)
                     }
                     val vagaUsuario = vaga.emailOcupante.equals(SharedPreferencesService.retrieveString(PessoaDados.EMAIL.value))
                     if (vagaUsuario){
@@ -69,8 +73,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     val possuiVaga = vaga.email.equals(SharedPreferencesService.retrieveString(PessoaDados.EMAIL.value))
                     if(possuiVaga){
                         mostrarVagaAtual(vaga.vaga.toString())
-                        val vagaFoiDisponibilizada = listaVagasDisponiveis.find { it.vaga == vaga.vaga} != null
-                        if(vagaFoiDisponibilizada){
+                        val vagaEstaDisponivel = listaVagasDisponiveis.find { it.vaga == vaga.vaga} != null
+                        val vagaEstaOcupada = listaVagasDisponiveis.find { it.vaga == vaga.vaga} != null
+                        if(vagaEstaDisponivel){
                             vagaUsuarioText.text = getString(R.string.tem_vaga)
                         }else{
                             vagaUsuarioText.text = getString(R.string.tem_vaga_disponivel)
