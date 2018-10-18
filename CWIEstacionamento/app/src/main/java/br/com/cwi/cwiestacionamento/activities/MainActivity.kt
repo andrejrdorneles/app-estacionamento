@@ -50,13 +50,6 @@ class MainActivity : BaseActivity() {
                     }else{
                         vagasDisponibilizadasOcupadas.add(vaga)
                     }
-                    val vagaUsuario = vaga.emailOcupante.equals(SharedPreferencesService.retrieveString(PessoaDados.EMAIL.value))
-                    if (vagaUsuario){
-                        mostrarVagaAtual(vaga.vaga.toString())
-                        vagaUsuarioText.text = getString(R.string.usando_vaga_de) + vaga.email
-                    }else{
-                        vagaUsuarioText.text = getString(R.string.nao_tem_vaga)
-                    }
                 }
                 
                 numeroVagasDisponiveis.text = listaVagasDisponiveis.size.toString()
@@ -69,10 +62,11 @@ class MainActivity : BaseActivity() {
         vagasRef.addValueEventListener(object : ValueEventListener {
 
             override fun onDataChange(p0: DataSnapshot) {
+                var possuiVagaFixa = false
                 for (vagaSnapshot in p0.children) {
                     val vaga = vagaSnapshot.getValue(Vaga::class.java)!!
-                    val possuiVaga = vaga.email.equals(SharedPreferencesService.retrieveString(PessoaDados.EMAIL.value))
-                    if(possuiVaga){
+                    possuiVagaFixa = vaga.email.equals(SharedPreferencesService.retrieveString(PessoaDados.EMAIL.value))
+                    if(possuiVagaFixa){
                         mostrarVagaAtual(vaga.vaga.toString())
                         val vagaEstaDisponivel = listaVagasDisponiveis.find { it.vaga == vaga.vaga} != null
                         val vagaOcupada = vagasDisponibilizadasOcupadas.find { it.vaga == vaga.vaga}
@@ -89,8 +83,19 @@ class MainActivity : BaseActivity() {
                                 vagaUsuarioText.text = getString(R.string.tem_vaga)
                             }
                         }
+                        break
                     }
 
+                }
+
+                if(!possuiVagaFixa){
+                    val vagaUsuario = vagasDisponibilizadasOcupadas.find { it.emailOcupante.equals(SharedPreferencesService.retrieveString(PessoaDados.EMAIL.value))}
+                    if (vagaUsuario != null){
+                        mostrarVagaAtual(vagaUsuario.vaga.toString())
+                        vagaUsuarioText.text = getString(R.string.usando_vaga_de) + vagaUsuario.email
+                    }else {
+                        vagaUsuarioText.text = getString(R.string.nao_tem_vaga)
+                    }
                 }
             }
 
