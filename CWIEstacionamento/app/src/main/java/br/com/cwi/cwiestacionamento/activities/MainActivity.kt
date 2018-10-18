@@ -109,7 +109,7 @@ class MainActivity : BaseActivity() {
         navigationView.setNavigationItemSelectedListener(this)
 
         verVagasButton.setOnClickListener {
-            intent = Intent(this, VagasActivity::class.java)
+            intent = Intent(this, VagasDisponiveisActivity::class.java)
             startActivity(intent)
         }
 
