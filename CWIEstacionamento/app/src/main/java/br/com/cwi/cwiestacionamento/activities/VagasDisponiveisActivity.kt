@@ -7,6 +7,7 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.Gravity
 import android.view.MenuItem
 import br.com.cwi.cwiestacionamento.R
 import br.com.cwi.cwiestacionamento.adapters.VagasDisponiveisAdapter
@@ -21,7 +22,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.stream.Collectors
 
-class VagasDisponiveisActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class VagasDisponiveisActivity : BaseActivity() {
 
     lateinit var myRecyclerView: RecyclerView
     lateinit var vagasAdapter: VagasDisponiveisAdapter
@@ -29,13 +30,6 @@ class VagasDisponiveisActivity : AppCompatActivity(), NavigationView.OnNavigatio
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_vagas_disponiveis)
-
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
-        navigationView.setNavigationItemSelectedListener(this)
-
         loadRecyclerViewData()
     }
 
@@ -142,5 +136,17 @@ class VagasDisponiveisActivity : AppCompatActivity(), NavigationView.OnNavigatio
         vagasDrawerLayout.closeDrawers()
         startActivity(intent)
         return true
+    }
+
+    override fun getContentView(): Int {
+        return R.layout.activity_vagas_disponiveis
+    }
+
+    override fun openDrawers() {
+        vagasDrawerLayout.openDrawer(Gravity.START)
+    }
+
+    override fun closeDrawers() {
+        vagasDrawerLayout.closeDrawers()
     }
 }

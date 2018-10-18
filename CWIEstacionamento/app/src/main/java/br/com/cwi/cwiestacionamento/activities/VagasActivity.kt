@@ -147,6 +147,5 @@ class VagasActivity : BaseActivity() {
     override fun closeDrawers() {
         vagasDrawerLayout.closeDrawers()
     }
-
 }
 
